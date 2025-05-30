@@ -1,13 +1,13 @@
-from flask import Flask, redirect, request
+import requests
 import time
 
-app = Flask(__name__)
+ENDPOINT = "https://telegram-template-bot.onrender.com/health"
 
-@app.route("/ping")
-def ping():
+def main():
     ts = int(time.time())
-    target_url = f"https://telegram-template-bot.onrender.com/health?ts={ts}"
-    return redirect(target_url, code=302)
+    url = f"{ENDPOINT}?ts={ts}"
+    resp = requests.get(url)
+    print(f"Pinged {url} - HTTP {resp.status_code}")
 
 if __name__ == "__main__":
-    app.run(port=8080)
+    main()
